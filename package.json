@@ -1,0 +1,38 @@
+{
+  "name": "duksu-fe",
+  "version": "1.0.0",
+  "description": "Electron TypeScript App with React",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "build": "npm run build:electron && npm run build:renderer",
+    "build:electron": "tsc",
+    "build:renderer": "vite build",
+    "start": "npm run build && electron .",
+    "dev": "npm run build && electron . --dev",
+    "dev:web": "npm run build && vite",
+    "start:renderer": "vite"
+  },
+  "devDependencies": {
+    "@types/node": "^22.16.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
+    "electron": "^37.2.0",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.1"
+  },
+  "dependencies": {
+    "dns": "^0.2.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

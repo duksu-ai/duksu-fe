@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "outDir": "./dist",
+    "rootDir": "duksu",
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "paths": {
+      "@main/*": ["duksu/backend/*"],
+      "@renderer/*": ["duksu/renderer/*"],
+      "@preload/*": ["duksu/preload/*"]
+    }
+  },
+  "include": [
+    "duksu/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "*.config.ts",
+    "*.config.js"
+  ]
+} 

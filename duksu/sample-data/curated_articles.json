@@ -1,0 +1,67 @@
+{
+  "feed_id": 1,
+  "feed_query_prompt": "I want to get news that could actually impact the U.S. stock market in the short term.",
+  "feed_topic": "News Impacting U.S. Stock Market Short Term",
+  "items": [
+    {
+      "article_id": 1,
+      "published_at": 1751554255,
+      "title": "How the retail industry is responding to Trump's trade deal with Vietnam",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2025/07/03/retailers-respond-to-trump-vietnam-trade-deal.html",
+      "thumbnail_url": "https://image.cnbcfm.com/api/v1/image/108167481-1751535845326-gettyimages-2209370011-VIETNAM_GARMENT.jpeg?v=1751535877&w=1920&h=1080",
+      "summary": "Retailers express relief but also concern over President Trump's tentative trade deal with Vietnam, which proposes a 20% tariff on imports, down from a previously suggested 46%. While avoiding the worst-case scenario, executives worry the increased duty, double the current 10%, will lead to higher consumer prices and potentially dampen spending. Vietnam has become a crucial manufacturing hub for the U.S. retail industry, particularly for footwear and apparel, as companies diversified supply chains away from China due to earlier tariffs. The proposed 20% tariff is seen as manageable compared to the higher rate, but companies like Nike may still raise prices to offset costs. The deal's announcement also offers hope for similar frameworks with other Asian countries like Cambodia, Malaysia, and Bangladesh, which also faced potential tariff hikes. Despite the relief, some executives argue any tariff increase ultimately burdens consumers.",
+      "keywords": ["Trump", "Vietnam", "trade deal", "tariffs", "retail industry"]
+    },
+    {
+      "article_id": 5,
+      "title": "S&P 500 Gains and Losses Today: Centene Pulls Guidance, Health Insurance Stocks Fall",
+      "url": "https://www.investopedia.com/s-and-p-500-gains-and-losses-today-health-insurance-stocks-fall-as-centene-withdraws-guidance-11765188",
+      "source": "Investopedia",
+      "thumbnail_url": "https://www.investopedia.com/thmb/LlY0-d-_wNNfOPpwJJGvkfPao6k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-2222437639-35e08d4dac2e4778addd4f3d7975eba7.jpg",
+      "published_at": 1751490840,
+      "summary": "S&P 500 and Nasdaq reached record closing highs on Wednesday, July 2, 2025, with the S&P 500 adding 0.5% and the Nasdaq up 0.9%, following President Trump's announcement of a trade deal with Vietnam. The Dow finished slightly lower. Centene shares plummeted 40% after the company withdrew its full-year guidance, citing enrollment pressure and higher illness levels, dragging down other health insurance stocks like Molina Healthcare and Elevance Health. Albemarle shares rose 8.1% as lithium prices edged higher. Coinbase Global shares gained 5.7% after acquiring token-management platform Liquifi. Moderna shares increased 5.5% on promising late-stage trial results for its experimental mRNA flu vaccine. Intel shares sank 4.3% on reports of a potential shift in its foundry strategy. Adobe shares fell 3.5% after a downgrade citing threats from generative AI tools and competitor Figma's IPO filing.",
+      "keywords": ["S&P 500", "Stock Market", "Health Insurance Stocks", "Centene", "Coinbase"]
+    },
+    {
+      "article_id": 6,
+      "title": "AI job predictions become corporate America's newest competitive sport",
+      "url": "https://techcrunch.com/2025/07/02/ai-job-predictions-become-corporate-americas-newest-competitive-sport/",
+      "published_at": 1751520618,
+      "source": "TechCrunch",
+      "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2016/03/boxing-gloves-businessman.jpg?resize=1200,800",
+      "summary": "CEOs are increasingly making dire predictions about AI's impact on jobs, turning workforce reduction forecasts into a competitive sport among corporate leaders. Anthropic CEO Dario Amodei warned that half of entry-level jobs could vanish within five years, potentially pushing U.S. unemployment to 20%. Other executives have followed suit with stark warnings. JPMorgan's Marianne Lake projected a 10% workforce reduction enabled by AI. Amazon's Andy Jassy alerted employees to expect a smaller workforce due to the technological shift. ThredUp's CEO stated AI will destroy 'way more jobs than the average person thinks.' Ford's Jim Farley made a sweeping claim that AI will 'literally replace half of all white-collar workers in the U.S.' This marks a significant shift from previous cautious statements, suggesting massive restructurings are anticipated.",
+      "keywords": ["AI", "jobs", "unemployment", "CEOs", "predictions"]
+    },
+    {
+      "article_id": 12,
+      "title": "Tesla's slump in sales accelerates as EV tax credit's future looks shaky",
+      "url": "https://www.washingtonpost.com/business/2025/07/02/tesla-sales-decline/",
+      "published_at": 1751515625,
+      "source": "The Washington Post",
+      "thumbnail_url": "https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/62YRTXB4XBY7Y4J5WLJBOUHWHQ.JPG&w=1440",
+      "summary": "Tesla's global vehicle deliveries declined for the second consecutive quarter, falling 13.5 percent in the second quarter of 2025 compared to the same period last year. This slump continues a trend from last year and follows a 13 percent drop in deliveries in the first quarter, which contributed to a 71 percent year-over-year decline in profits. Analysts attribute recent struggles partly to increased competition and CEO Elon Musk's controversial involvement in government during President Trump's second term. Further challenges loom as the Senate passed a tax and spending bill that includes a provision to end the $7,500 EV tax credit, which analysts predict could reduce Tesla's U.S. sales by 10-12 percent. While Tesla is considered better positioned than other automakers to absorb this hit due to its profitability, the potential loss of the credit adds another headwind to domestic sales. Musk has publicly clashed with Trump over the bill and the tax credit, adding political tension that analysts believe could negatively impact Tesla's regulatory prospects in Washington.",
+      "keywords": ["Tesla", "EV sales", "EV tax credit", "Elon Musk", "electric vehicles"]
+    },
+    {
+      "article_id": 14,
+      "title": "U.S. lifts chip software curbs on China in sign of trade truce",
+      "url": "https://www.cnbc.com/2025/07/03/us-lifts-chip-software-curbs-on-china-amid-trade-truce-synopsys-says-.html",
+      "published_at": 1751509680,
+      "source": "CNBC",
+      "thumbnail_url": "https://image.cnbcfm.com/api/v1/image/108167416-1751515188712-gettyimages-452522892-_P0A9220.jpeg?v=1751515209&w=1920&h=1080",
+      "summary": "The U.S. government has lifted export restrictions on chip-design software to China, a move seen as a sign of a potential trade truce. Semiconductor software companies Siemens AG, Synopsys, and Cadence announced they received letters from the U.S. Department of Commerce confirming the removal of controls. Siemens, whose chip design subsidiary is based in the U.S., stated it has restored full access and resumed sales and support to Chinese customers. Synopsys and Cadence are also working to do the same. The U.S. had previously required licenses for exporting semiconductor software and technology to China since May 23, following earlier restrictions on advanced AI processors. The three firms are major players in the electronic design automation (EDA) market. This development follows recent signals from China about progress towards a trade truce and conditional agreements to resume exchanges of rare earths and advanced technology.",
+      "keywords": ["US-China relations", "chip software", "export controls", "trade truce", "semiconductors"]
+    },
+    {
+      "article_id": 15,
+      "title": "The US dollar is on track for its worst year in modern history",
+      "url": "https://www.semafor.com/article/07/03/2025/the-us-dollar-is-on-track-for-its-worst-year-in-modern-history",
+      "published_at": 1751557020,
+      "source": "Semafor",
+      "thumbnail_url": "https://img.semafor.com/6a2dc9adb68eb4805ae63cb39d79378de4385076-5583x3668.jpg?rect=0,369,5583,2931&w=1200&h=630&q=75&auto=format",
+      "summary": "The US dollar is projected to experience its most significant annual decline in modern history, having already fallen over 7% this year, with Morgan Stanley forecasting an additional 10% drop. A weaker dollar could benefit US exports, aligning with plans to rebalance trade, but would also increase import costs. The article explores whether this trend could challenge the dollar's central position in the global financial system, noting that while de-dollarization efforts haven't significantly altered the landscape yet, the dollar's stability has historically relied on sound US policy and global engagement. The current situation is compared to 1973, the previous closest year for dollar depreciation, which preceded President Nixon removing the US from the gold standard, highlighting that substantial dollar movements often lead to instability.",
+      "keywords": ["US dollar", "currency", "economy", "de-dollarization"]
+    }
+  ]
+}
