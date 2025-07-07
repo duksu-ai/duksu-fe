@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
 export interface NewsFeed {
@@ -16,21 +16,11 @@ export interface CreateFeedData {
   feed_topic: string
 }
 
-export interface UseCreateFeedResult {
-  createFeed: (data: CreateFeedData) => Promise<NewsFeed | null>
-  loading: boolean
-  error: string | null
-}
+export default function useCreateFeed() {
+  const queryClient = useQueryClient()
 
-export default function useCreateFeed(): UseCreateFeedResult {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const createFeed = async (data: CreateFeedData): Promise<NewsFeed | null> => {
-    try {
-      setLoading(true)
-      setError(null)
-      
+  return useMutation({
+    mutationFn: async (data: CreateFeedData): Promise<NewsFeed> => {
       const { data: feedData, error: supabaseError } = await supabase
         .from('news_feeds')
         .insert([{
@@ -46,17 +36,10 @@ export default function useCreateFeed(): UseCreateFeedResult {
       }
 
       return feedData
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-      return null
-    } finally {
-      setLoading(false)
+    },
+    onSuccess: () => {
+      // Invalidate and refetch any queries that might be affected
+      queryClient.invalidateQueries({ queryKey: ['feeds'] })
     }
-  }
-
-  return {
-    createFeed,
-    loading,
-    error
-  }
+  })
 }

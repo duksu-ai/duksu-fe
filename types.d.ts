@@ -7,7 +7,7 @@ declare module '@vitejs/plugin-react' {
 }
 
 declare module 'tailwindcss' {
-  export interface Config {
+  export interface TailwindConfig {
     content: string[];
     theme: {
       extend: any;

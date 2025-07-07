@@ -1,0 +1,5 @@
+{
+  "watch": ["duksu/backend/**/*"],
+  "ext": "ts,js",
+  "ignore": ["dist/**/*", "node_modules/**/*"]
+} 

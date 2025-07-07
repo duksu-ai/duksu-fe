@@ -1,19 +1,21 @@
 import { app } from "electron";
-import { getPlatform } from "./util";
-import window from "./window";
+import { getPlatform } from './util';
+import createWindow, { BrowserWindow } from './window';
 
+let window: BrowserWindow | null = null;
 const instanceLock = app.requestSingleInstanceLock();
 if (!instanceLock) {
   app.quit()
 } else {
   app.whenReady().then(() => {
+    window = createWindow();
     window.show();
   });
   app.on('second-instance', () => {
-    window.show();
+    window?.show();
   });
   app.on('activate', () => {
-    window.show();
+    window?.show();
   });
 }
 

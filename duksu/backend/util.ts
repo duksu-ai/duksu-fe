@@ -1,4 +1,3 @@
-import { ipcMain } from 'electron';
 import dns from 'dns';
 
 export function getPlatform() {

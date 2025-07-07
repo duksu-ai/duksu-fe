@@ -14,13 +14,15 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    host: 'localhost',
+    cors: true,
     hmr: {
       port: 5173,
     },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './duksu/renderer/src'),
+      '@': path.resolve(__dirname, './duksu/renderer'),
     },
   },
 }) 

@@ -1,62 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
+import { useEffect, useState } from 'react'
+import { Session } from '@supabase/supabase-js'
 
 export interface User {
-  id: number
   user_id: string
   created_at: string
   updated_at: string | null
 }
 
-export interface UseGetUserInfoResult {
-  user: User | null
-  loading: boolean
-  error: string | null
-  refetch: () => void
-}
+export default function useGetUserInfo() {
+  const [session, setSession] = useState<Session | null>(null);
 
-export default function useGetUserInfo(userId: string): UseGetUserInfoResult {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+  }, []);
 
-  const fetchUser = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      
+  return useQuery({
+    queryKey: ['user', session?.user.id],
+    queryFn: async (): Promise<User> => {
       const { data, error: supabaseError } = await supabase
         .from('users')
         .select('*')
-        .eq('user_id', userId)
+        .eq('auth_id', session?.user.id)
         .single()
 
       if (supabaseError) {
         throw supabaseError
       }
 
-      setUser(data)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (userId) {
-      fetchUser()
-    }
-  }, [userId])
-
-  const refetch = () => {
-    fetchUser()
-  }
-
-  return {
-    user,
-    loading,
-    error,
-    refetch
-  }
+      return data
+    },
+    enabled: !!session?.user.id, // Only run query if userId is provided
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+  })
 }

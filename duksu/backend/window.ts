@@ -1,7 +1,7 @@
-import path from "path";
-import { BrowserWindow as ElectronBrowserWindow, ipcMain, Rectangle, screen } from "electron";
-import { getPlatform } from "./util";
-import config from "./config";
+import path from 'path';
+import { BrowserWindow as ElectronBrowserWindow, ipcMain, Rectangle, screen } from 'electron';
+import { getPlatform } from './util';
+import config from './config';
 
 function calculateBounds(bounds: Rectangle, options: { width: number, height: number }): Rectangle {
     const display = screen.getPrimaryDisplay();
@@ -14,7 +14,16 @@ function calculateBounds(bounds: Rectangle, options: { width: number, height: nu
     return { x, y, width: dimentions.width, height: dimentions.height }
 }
 
-class BrowserWindow extends ElectronBrowserWindow {
+function loadRenderer(window: BrowserWindow) {
+  const isDev = process.argv.includes('--dev');
+  if (isDev) {
+    window.loadURL('http://localhost:5173');
+  } else {
+    window.loadFile(path.resolve(__dirname, '..', 'renderer', 'index.html'));
+  }
+}
+
+export class BrowserWindow extends ElectronBrowserWindow {
   resize(width: number, height: number) {
     const currentBounds = this.getBounds();
     const newBounds = calculateBounds(currentBounds, { width, height });
@@ -22,67 +31,81 @@ class BrowserWindow extends ElectronBrowserWindow {
   }
 }
 
-const window = new BrowserWindow({
-  width: config.window.defaultWidth,
-  height: config.window.defaultHeight,
-  minWidth: config.window.minWidth,
-  minHeight: config.window.minHeight,
-  webPreferences: {
-    nodeIntegration: false,
-    contextIsolation: true,
-    preload: path.resolve(__dirname, 'preload.js'),
-  },
-  titleBarStyle: getPlatform() === 'macos' ? 'hiddenInset' : 'default',
-  frame: getPlatform() !== 'windows',
-});
+function createWindow(): BrowserWindow {
+  const window = new BrowserWindow({
+    width: config.window.defaultWidth,
+    height: config.window.defaultHeight,
+    minWidth: config.window.minWidth,
+    minHeight: config.window.minHeight,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.resolve(__dirname, 'preload.js'),
+    },
+    titleBarStyle: getPlatform() === 'macos' ? 'hiddenInset' : 'default',
+    frame: getPlatform() !== 'windows',
+  });
+  
+  loadRenderer(window);
+  
+  if (process.argv.includes('--dev')) {
+    window.webContents.openDevTools();
+  }
 
-window.loadFile(path.resolve(__dirname, '..', '..', 'renderer', 'index.html'));
+  window.webContents.on('will-redirect', (event, url) => {
+    if (url.includes('auth/callback')) {
+      event.preventDefault();
+      
+      const fragment = url.split('#')[1];
+      window.webContents.send('auth:callback', fragment);
+    }
+  });
+  
+  window.once('ready-to-show', () => {
+    window.show();
+  });
+  
+  window.on('close', () => {
+    if (getPlatform() !== 'macos') {
+      window.hide();
+    } else {
+      window.close();
+    }
+  });
+  
+  /**
+   * IPC Events
+   */
+  ipcMain.on('window:show', () => {
+    window.show();
+  });
+  
+  ipcMain.on('window:hide', () => {
+    window.hide();
+  });
+  
+  ipcMain.on('window:close', () => {
+    window.close();
+  });
+  
+  ipcMain.on('window:minimize', () => {
+    window.minimize();
+  });
+  
+  ipcMain.on('window:maximize', () => {
+    window.maximize();
+  });
+  
+  ipcMain.on('window:unmaximize', () => {
+    window.unmaximize();
+  });
+  
+  ipcMain.on('window:resize', (_, width: number, height: number) => {
+    window.resize(width, height);
+  });
 
-if (process.argv.includes('--dev')) {
-  window.webContents.openDevTools();
+
+  return window;
 }
 
-window.once('ready-to-show', () => {
-  window.show();
-});
-
-window.on('close', () => {
-  if (getPlatform() !== 'macos') {
-    window.hide();
-  } else {
-    window.close();
-  }
-});
-
-export default window;
-
-/**
- * IPC Events
- */
-ipcMain.on('window:show', () => {
-  window.show();
-});
-
-ipcMain.on('window:hide', () => {
-  window.hide();
-});
-
-ipcMain.on('window:close', () => {
-  window.close();
-});
-
-ipcMain.on('window:minimize', () => {
-  window.minimize();
-});
-
-ipcMain.on('window:maximize', () => {
-  window.maximize();
-});
-
-ipcMain.on('window:unmaximize', () => {
-  window.unmaximize();
-});
-
-ipcMain.on('window:resize', (_, width: number, height: number) => {
-  window.resize(width, height);
-});
+export default createWindow;

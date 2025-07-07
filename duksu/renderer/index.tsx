@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './components/App'
 
+declare global {
+  var cn: (...inputs: any[]) => string
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

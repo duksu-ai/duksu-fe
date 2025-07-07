@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
 export interface UpdateFeedData {
@@ -7,21 +7,11 @@ export interface UpdateFeedData {
   feed_topic?: string
 }
 
-export interface UseUpdateFeedResult {
-  updateFeed: (data: UpdateFeedData) => Promise<boolean>
-  loading: boolean
-  error: string | null
-}
+export default function useUpdateFeed() {
+  const queryClient = useQueryClient()
 
-export default function useUpdateFeed(): UseUpdateFeedResult {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const updateFeed = async (data: UpdateFeedData): Promise<boolean> => {
-    try {
-      setLoading(true)
-      setError(null)
-      
+  return useMutation({
+    mutationFn: async (data: UpdateFeedData): Promise<void> => {
       const updateData: any = {
         query_prompt: data.query_prompt,
         updated_at: new Date().toISOString()
@@ -39,19 +29,11 @@ export default function useUpdateFeed(): UseUpdateFeedResult {
       if (supabaseError) {
         throw supabaseError
       }
-
-      return true
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-      return false
-    } finally {
-      setLoading(false)
+    },
+    onSuccess: (_, variables) => {
+      // Invalidate and refetch queries that might be affected
+      queryClient.invalidateQueries({ queryKey: ['feeds'] })
+      queryClient.invalidateQueries({ queryKey: ['feed', variables.feedId] })
     }
-  }
-
-  return {
-    updateFeed,
-    loading,
-    error
-  }
+  })
 }
