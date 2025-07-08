@@ -41,7 +41,7 @@ export default function FeedItem({ article, onClick }: FeedItemProps) {
       )}
       <CardContent className="p-4 relative">
         <div className="flex flex-col space-y-3">
-          <h5 className="font-semibold text-xl leading-tight">
+          <h5 className="font-medium text-xl leading-tight">
             {article.title}
           </h5>
           
@@ -66,7 +66,7 @@ export default function FeedItem({ article, onClick }: FeedItemProps) {
           )}
           
           {article.summary_short && (
-            <p className="text-md text-muted-foreground leading-relaxed py-3">
+            <p className="text-md leading-relaxed py-3">
               {article.summary_short}
             </p>
           )}
@@ -74,7 +74,7 @@ export default function FeedItem({ article, onClick }: FeedItemProps) {
           {article.keywords && article.keywords.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {article.keywords.slice(0, 5).map((keyword, idx) => (
-                <span key={idx} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
+                <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
                   {keyword}
                 </span>
               ))}

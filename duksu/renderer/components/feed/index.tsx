@@ -19,7 +19,7 @@ export default function Feed({
 
   return (
     <div className={`max-w-2xl mx-auto ${className}`}>
-      <div className="space-y-14">
+      <div className="space-y-11">
         {itemsToShow.map((itemProps) => (
           <FeedItem 
             key={itemProps.article.title}
