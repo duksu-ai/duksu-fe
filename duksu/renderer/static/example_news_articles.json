@@ -1,7 +1,7 @@
 {
   "feed_id": 1,
   "feed_query_prompt": "I want to get news that could actually impact the U.S. stock market in the short term.",
-  "feed_topic": "News Impacting U.S. Stock Market Short Term",
+  "feed_name": "News Impacting U.S. Stock Market Short Term",
   "items": [
     {
       "article_id": 1,

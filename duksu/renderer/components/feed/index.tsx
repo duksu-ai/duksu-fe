@@ -1,8 +1,7 @@
-import { BookOpen } from 'lucide-react';
 import FeedItem, { FeedItemProps } from './FeedItem';
 
 export interface FeedData {
-  feed_topic: string;
+  feed_name: string;
   items: FeedItemProps[];
 }
 
@@ -22,10 +21,10 @@ export default function Feed({
   const itemsToShow = maxItems ? data.items.slice(0, maxItems) : data.items;
 
   return (
-    <div className={`max-w-2xl mx-auto space-y-6 ${className}`}>
+    <div className={`max-w-2xl mx-auto space-y-8 ${className}`}>
       {showTitle && (
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">{data.feed_topic}</h2>
+          <h2 className="text-2xl font-bold">{data.feed_name}</h2>
         </div>
       )}
       

@@ -26,7 +26,7 @@ export default function Tutorial({ onComplete }: TutorialProps) {
 
   // Transform curated articles data to match FeedData structure
   const feedData: FeedData = {
-    feed_topic: curatedArticles.feed_topic,
+    feed_name: curatedArticles.feed_name,
     items: curatedArticles.items.slice(0, 4).map((article) => ({
       article: {
         title: article.title,
@@ -116,22 +116,8 @@ export default function Tutorial({ onComplete }: TutorialProps) {
   return (
     <div className="min-h-screen bg-background p-6 pb-20">
       <div className="max-w-3xl mx-auto">
-        {/* Progress indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center gap-2">
-            {steps.map((_, index) => (
-              <div
-                key={index}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index <= currentStep ? 'bg-primary' : 'bg-muted'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-
         {/* Main content */}
-        <Card className="mb-8">
+        <Card className="my-8">
           <CardContent>
             {currentStepData}
           </CardContent>

@@ -1,9 +1,9 @@
 const config = {
     window: {
-        defaultWidth: 1200,
+        defaultWidth: 800,
         defaultHeight: 800,
         minWidth: 800,
-        minHeight: 600,
+        minHeight: 800,
     }
 };
 

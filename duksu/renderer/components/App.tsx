@@ -6,6 +6,7 @@ import { localStorage } from '../lib/localStorage'
 import Auth from './Auth'
 import Home from './Home'
 import Tutorial from './Tutorial'
+import TitleBar from './TitleBar'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -59,6 +60,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <TitleBar />
       {session ? (
         showTutorial ? (
           <Tutorial onComplete={handleTutorialComplete} />

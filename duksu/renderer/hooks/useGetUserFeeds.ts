@@ -6,7 +6,7 @@ export interface NewsFeed {
   id: number
   user_id: string
   query_prompt: string
-  feed_topic: string
+  feed_name: string
   created_at: string
   updated_at: string | null
 }

@@ -39,7 +39,7 @@ export default function Home() {
       await createFeedMutation.mutateAsync({
         user_id: userInfo?.user_id,
         query_prompt: prompt.trim(),
-        feed_topic: topic.trim()
+        feed_name: topic.trim()
       })
       
       setPrompt('')
@@ -102,7 +102,7 @@ export default function Home() {
               {feeds.map((feed) => (
                 <Card key={feed.id} className="hover:shadow-md transition-shadow">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">{feed.feed_topic}</CardTitle>
+                    <CardTitle className="text-lg">{feed.feed_name}</CardTitle>
                     <CardDescription className="text-sm line-clamp-2">
                       {feed.query_prompt}
                     </CardDescription>
