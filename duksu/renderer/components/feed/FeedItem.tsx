@@ -4,8 +4,9 @@ type NewsArticle = {
   title: string;
   source: string;
   url: string;
-  thumbnail_url: string;
-  summary: string;
+  thumbnail_url: string | null;
+  summary: string | null;
+  summary_short: string | null;
   keywords: string[];
   published_at: number;
 }
@@ -32,10 +33,13 @@ export default function FeedItem({ article, onClick }: FeedItemProps) {
 
   return (
     <Card 
-      className={`hover:shadow-md transition-shadow ${onClick ? 'cursor-pointer' : ''}`}
+      className="hover:shadow-md transition-shadow relative group cursor-pointer"
       onClick={handleClick}
     >
-      <CardContent className="p-4">
+      {onClick && (
+        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg pointer-events-none" />
+      )}
+      <CardContent className="p-4 relative">
         <div className="flex flex-col space-y-3">
           <h5 className="font-semibold text-xl leading-tight">
             {article.title}
@@ -61,11 +65,13 @@ export default function FeedItem({ article, onClick }: FeedItemProps) {
             </div>
           )}
           
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {article.summary}
-          </p>
+          {article.summary_short && (
+            <p className="text-md text-muted-foreground leading-relaxed py-3">
+              {article.summary_short}
+            </p>
+          )}
           
-          {article.keywords && (
+          {article.keywords && article.keywords.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {article.keywords.slice(0, 5).map((keyword, idx) => (
                 <span key={idx} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">

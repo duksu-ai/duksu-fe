@@ -5,7 +5,6 @@ export interface NewsFeed {
   id: number
   user_id: string
   query_prompt: string
-  feed_name: string
   created_at: string
   updated_at: string | null
 }
@@ -13,7 +12,6 @@ export interface NewsFeed {
 export interface CreateFeedData {
   user_id: string
   query_prompt: string
-  feed_name: string
 }
 
 export default function useCreateFeed() {
@@ -25,8 +23,7 @@ export default function useCreateFeed() {
         .from('news_feeds')
         .insert([{
           user_id: data.user_id,
-          query_prompt: data.query_prompt,
-          feed_name: data.feed_name
+          query_prompt: data.query_prompt
         }])
         .select()
         .single()

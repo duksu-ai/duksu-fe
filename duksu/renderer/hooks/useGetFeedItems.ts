@@ -11,7 +11,8 @@ export interface NewsArticle {
   content_markdown_path: string | null
   thumbnail_url: string | null
   summary: string | null
-  keywords: string | null
+  summary_short: string | null
+  keywords: string[]
 }
 
 export interface FeedItemsPage {
@@ -26,7 +27,7 @@ export interface UseGetFeedItemsParams {
   pageSize?: number
 }
 
-export default function useGetFeedItems({ feedId, pageSize = 20 }: UseGetFeedItemsParams) {
+export default function useGetFeedItems({ feedId, pageSize = 5 }: UseGetFeedItemsParams) {
   return useInfiniteQuery({
     queryKey: ['feedItems', feedId],
     queryFn: async ({ pageParam = 0 }): Promise<FeedItemsPage> => {
@@ -41,6 +42,7 @@ export default function useGetFeedItems({ feedId, pageSize = 20 }: UseGetFeedIte
         `, { count: 'exact' })
         .eq('news_feed_id', feedId)
         .order('created_at', { ascending: false })
+        .order('id', { ascending: true })
         .range(from, to)
 
       if (error) {
@@ -51,7 +53,19 @@ export default function useGetFeedItems({ feedId, pageSize = 20 }: UseGetFeedIte
       const hasMore = to < totalCount - 1
       const nextCursor = hasMore ? pageParam + 1 : null
 
-      const articles = (data || []).map(item => item.news_articles)
+      const articles = (data || []).map(item => {
+        const article = item.news_articles;
+        return {
+          ...article,
+          keywords: article.keywords ? (() => {
+            try {
+              return JSON.parse(article.keywords);
+            } catch {
+              return [];
+            }
+          })() : []
+        };
+      });
 
       return {
         feedId,

@@ -40,7 +40,7 @@ export default function TitleBar({ showAvatar = false, avatar_url }: TitleBarPro
 
   return (
     <div 
-      className="top-0 left-0 right-0 z-50 bg-transparent flex items-center justify-end px-4 py-2"
+      className="top-0 left-0 right-0 z-50 bg-transparent flex items-center justify-end px-4 py-2 select-none"
       style={{ WebkitAppRegion: 'drag' } as React.CSSProperties}
     >
       <div 

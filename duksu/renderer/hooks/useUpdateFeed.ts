@@ -4,7 +4,6 @@ import { supabase } from '../lib/supabase'
 export interface UpdateFeedData {
   feedId: number
   query_prompt: string
-  feed_name?: string
 }
 
 export default function useUpdateFeed() {
@@ -15,10 +14,6 @@ export default function useUpdateFeed() {
       const updateData: any = {
         query_prompt: data.query_prompt,
         updated_at: new Date().toISOString()
-      }
-
-      if (data.feed_name) {
-        updateData.feed_name = data.feed_name
       }
 
       const { error: supabaseError } = await supabase

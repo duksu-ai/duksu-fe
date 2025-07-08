@@ -44,7 +44,6 @@ export default function Tutorial({ onComplete }: TutorialProps) {
 
   // Transform curated articles data to match FeedData structure
   const feedData: FeedData = {
-    feed_name: curatedArticles.feed_name,
     items: curatedArticles.items.slice(0, 4).map((article) => ({
       article: {
         title: article.title,
@@ -52,6 +51,7 @@ export default function Tutorial({ onComplete }: TutorialProps) {
         url: article.url,
         thumbnail_url: article.thumbnail_url,
         summary: article.summary,
+        summary_short: article.summary,
         keywords: article.keywords,
         published_at: article.published_at
       }
@@ -123,7 +123,6 @@ export default function Tutorial({ onComplete }: TutorialProps) {
         
         <Feed 
           data={feedData}
-          showTitle={true}
         />
       </div>
     )
