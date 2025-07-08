@@ -51,7 +51,7 @@ export default function Tutorial({ onComplete }: TutorialProps) {
         url: article.url,
         thumbnail_url: article.thumbnail_url,
         summary: article.summary,
-        summary_short: article.summary,
+        summary_short: article.summary_short,
         keywords: article.keywords,
         published_at: article.published_at
       }
