@@ -53,7 +53,7 @@ function createWindow(): BrowserWindow {
   }
 
   window.webContents.on('will-redirect', (event, url) => {
-    if (url.includes('auth/callback')) {
+    if (url.includes('localhost:4000')) {
       event.preventDefault();
       
       const fragment = url.split('#')[1];

@@ -26,7 +26,9 @@ export default function Home() {
   const { data: userInfo, isLoading: userLoading } = useGetUserInfo();
   const { data: feeds, isLoading: feedsLoading, refetch: refetchFeeds } = useGetUserFeeds();
 
-  const createFeedMutation = useCreateFeed()
+  const createFeedMutation = useCreateFeed();
+
+  localStorage.setItem('last_accessed_at', new Date().toISOString());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
