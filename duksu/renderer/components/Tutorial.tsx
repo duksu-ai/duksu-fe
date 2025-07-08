@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, Sparkles } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from './ui/carousel';
 import Feed, { FeedData } from './feed';
 import curatedArticles from '../static/example_news_articles.json';
 
@@ -10,15 +11,32 @@ interface TutorialProps {
 }
 
 export default function Tutorial({ onComplete }: TutorialProps) {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
   
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   const handleComplete = () => {
     onComplete();
   };
 
   const handleNext = () => {
-    if (currentStep < 2) {
-      setCurrentStep(currentStep + 1);
+    if (!api) return;
+    
+    if (current < count - 1) {
+      api.scrollNext();
     } else {
       handleComplete();
     }
@@ -111,27 +129,33 @@ export default function Tutorial({ onComplete }: TutorialProps) {
     )
   ];
 
-  const currentStepData = steps[currentStep];
-
   return (
-    <div className="min-h-screen bg-background p-6 pb-20">
+    <div className="bg-background p-6 pb-20">
       <div className="max-w-3xl mx-auto">
         {/* Main content */}
-        <Card className="my-8">
-          <CardContent>
-            {currentStepData}
-          </CardContent>
-        </Card>
+        <Carousel setApi={setApi} className="w-full">
+          <CarouselContent>
+            {steps.map((step, index) => (
+              <CarouselItem key={index}>
+                <Card>
+                  <CardContent>
+                    {step}
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
 
       {/* Fixed Navigation Footer */}
       <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-6">
         <div className="max-w-3xl mx-auto flex justify-between items-center">
           <div className="text-sm text-muted-foreground">
-            {currentStep + 1} of {steps.length}
+            {current + 1} of {count}
           </div>
           <Button onClick={handleNext} className="gap-2">
-            {currentStep < steps.length - 1 ? (
+            {current < count - 1 ? (
               <>
                 Next
                 <ArrowRight className="w-4 h-4" />

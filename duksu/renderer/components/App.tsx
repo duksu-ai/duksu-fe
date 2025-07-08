@@ -52,24 +52,34 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="h-screen flex flex-col">
+        <TitleBar showAvatar={false} />
+        <div className="flex-1 flex justify-center items-center">
+          Loading...
+        </div>
       </div>
     )
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TitleBar />
-      {session ? (
-        showTutorial ? (
-          <Tutorial onComplete={handleTutorialComplete} />
-        ) : (
-          <Home />
-        )
-      ) : (
-        <Auth />
-      )}
+      <div className="h-screen flex flex-col">
+        <TitleBar 
+          showAvatar={!!session} 
+          avatar_url={session?.user?.user_metadata?.avatar_url}
+        />
+        <div className="flex-1 overflow-y-auto">
+          {session ? (
+            showTutorial ? (
+              <Tutorial onComplete={handleTutorialComplete} />
+            ) : (
+              <Home />
+            )
+          ) : (
+            <Auth />
+          )}
+        </div>
+      </div>
     </QueryClientProvider>
   )
 }

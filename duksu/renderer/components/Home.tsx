@@ -71,17 +71,8 @@ export default function Home() {
   const hasFeeds = feeds && feeds.length > 0
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="bg-background p-6">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Your AI-Curated News Feed
-          </h1>
-          <p className="text-muted-foreground">
-            Welcome back! {userInfo ? 'Ready to discover today\'s news?' : 'Let\'s get started.'}
-          </p>
-        </div>
 
         {/* Existing Feeds */}
         {hasFeeds && (
@@ -124,7 +115,7 @@ export default function Home() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Plus className="h-5 w-5" />
-                Create Your First News Feed
+                Create Your News Feed
               </CardTitle>
               <CardDescription>
                 Tell us what kind of news you're interested in, and we'll curate a personalized feed for you.
