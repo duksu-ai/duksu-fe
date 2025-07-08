@@ -49,7 +49,7 @@ export default function Tutorial({ onComplete }: TutorialProps) {
         title: article.title,
         source: article.source,
         url: article.url,
-        thumbnail_url: article.thumbnail_url,
+        thumbnail_url: article.thumbnail_url || null,
         summary: article.summary,
         summary_short: article.summary_short,
         keywords: article.keywords,
