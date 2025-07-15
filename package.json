@@ -1,6 +1,6 @@
 {
   "name": "duksu-fe",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Electron TypeScript App with React",
   "main": "dist/backend/index.js",
   "homepage": "https://github.com/duksu-ai/duksu-fe",
