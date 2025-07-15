@@ -8,9 +8,6 @@ const ipcEvents = {
         windowHide: () => {
             ipcRenderer.send('window:hide');
         },
-        windowClose: () => {
-            ipcRenderer.send('window:close');
-        },
         windowMinimize: () => {
             ipcRenderer.send('window:minimize');
         },
@@ -33,11 +30,17 @@ const ipcEvents = {
         onAuthCallback: (callback: (fragment: string) => void) => {
             ipcRenderer.on('auth:callback', (_, fragment) => callback(fragment));
         }
+    },
+    shell: {
+        openExternal: (url: string) => {
+            ipcRenderer.send('shell:openExternal', url);
+        }
     }
 }
 
 contextBridge.exposeInMainWorld('WindowAPI', ipcEvents.window);
 contextBridge.exposeInMainWorld('ClipboardAPI', ipcEvents.clipboard);
 contextBridge.exposeInMainWorld('AuthAPI', ipcEvents.auth);
+contextBridge.exposeInMainWorld('ShellAPI', ipcEvents.shell);
 
 export type IpcEvents = typeof ipcEvents;

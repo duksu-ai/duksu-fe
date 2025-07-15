@@ -1,5 +1,5 @@
 import { Button } from './ui/button';
-import { User, LogOut } from 'lucide-react';
+import { User, LogOut, Mail } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import {
   DropdownMenu,
@@ -18,6 +18,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './ui/alert-dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog';
 import { supabase } from '../lib/supabase';
 import { useState } from 'react';
 
@@ -28,6 +35,7 @@ interface TitleBarProps {
 
 export default function TitleBar({ showAvatar = false, avatar_url }: TitleBarProps) {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+  const [isSupportDialogOpen, setIsSupportDialogOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -47,13 +55,36 @@ export default function TitleBar({ showAvatar = false, avatar_url }: TitleBarPro
         className="flex items-center gap-4"
         style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
       >
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-8 px-2 text-sm"
-        >
-          Need Support?
-        </Button>
+        <Dialog open={isSupportDialogOpen} onOpenChange={setIsSupportDialogOpen}>
+          <DialogTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-8 px-2 text-sm"
+            >
+              Need Support?
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5" />
+                Get Support
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                We welcome your suggestions, feedback, and any questions you might have.
+              </p>
+              <div className="flex items-center justify-center p-4 bg-muted rounded-lg">
+                <div className="text-center">
+                  <p className="text-sm font-medium mb-1">Contact us at:</p>
+                  <p className="text-lg font-mono text-primary">duksuai@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
         <Button 
           variant="ghost" 
           size="sm" 

@@ -1,5 +1,5 @@
 import path from 'path';
-import { BrowserWindow as ElectronBrowserWindow, ipcMain, Rectangle, screen } from 'electron';
+import { BrowserWindow as ElectronBrowserWindow, ipcMain, Rectangle, screen, app } from 'electron';
 import { getPlatform } from './util';
 import config from './config';
 
@@ -32,9 +32,12 @@ export class BrowserWindow extends ElectronBrowserWindow {
 }
 
 function createWindow(): BrowserWindow {
+  const display = screen.getPrimaryDisplay();
+  const screenHeight = display.workAreaSize.height;
+  
   const window = new BrowserWindow({
     width: config.window.defaultWidth,
-    height: config.window.defaultHeight,
+    height: config.window.defaultHeight || screenHeight,
     minWidth: config.window.minWidth,
     minHeight: config.window.minHeight,
     webPreferences: {
@@ -65,12 +68,9 @@ function createWindow(): BrowserWindow {
     window.show();
   });
   
-  window.on('close', () => {
-    if (getPlatform() !== 'macos') {
-      window.hide();
-    } else {
-      window.close();
-    }
+  window.on('close', (event) => {
+    event.preventDefault();
+    window.hide();
   });
   
   /**
@@ -82,10 +82,6 @@ function createWindow(): BrowserWindow {
   
   ipcMain.on('window:hide', () => {
     window.hide();
-  });
-  
-  ipcMain.on('window:close', () => {
-    window.close();
   });
   
   ipcMain.on('window:minimize', () => {
@@ -103,7 +99,6 @@ function createWindow(): BrowserWindow {
   ipcMain.on('window:resize', (_, width: number, height: number) => {
     window.resize(width, height);
   });
-
 
   return window;
 }

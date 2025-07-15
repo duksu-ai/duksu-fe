@@ -22,4 +22,9 @@ declare module 'autoprefixer' {
 
 declare module 'tailwindcss/plugin' {
   export default function plugin(callback: any): any;
-} 
+}
+
+declare module "*.png" {
+  const value: string;
+  export default value;
+}

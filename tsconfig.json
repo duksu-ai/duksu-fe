@@ -24,11 +24,12 @@
     "paths": {
       "@main/*": ["duksu/backend/*"],
       "@renderer/*": ["duksu/renderer/*"],
-      "@preload/*": ["duksu/preload/*"]
+      "@assets/*": ["duksu/assets/*"]
     }
   },
   "include": [
-    "duksu/**/*"
+    "duksu/**/*",
+    "types.d.ts"
   ],
   "exclude": [
     "node_modules",

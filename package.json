@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "description": "Electron TypeScript App with React",
   "main": "dist/backend/index.js",
+  "homepage": "https://github.com/duksu-ai/duksu-fe",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/duksu-ai/duksu-fe.git"
+  },
   "scripts": {
     "build": "npm run build:electron && npm run build:renderer",
-    "build:electron": "tsc",
+    "build:electron": "tsc && cp -r duksu/assets/ dist/assets/",
     "build:renderer": "vite build",
     "start": "npm run build && electron .",
     "dev": "concurrently \"npm run dev:web\" \"npm run dev:electron\"",
     "dev:web": "vite",
     "dev:electron": "nodemon --exec electron . --dev",
-    "start:renderer": "vite"
+    "start:renderer": "vite",
+    "dist:all": "npm run build && npm run dist:win && npm run dist:mac-arm64 && npm run dist:mac-x64",
+    "dist:win": "electron-builder --win --x64",
+    "dist:mac-arm64": "electron-builder --mac --arm64",
+    "dist:mac-x64": "electron-builder --mac --x64"
   },
   "devDependencies": {
     "@types/node": "^22.16.0",
@@ -23,6 +32,7 @@
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.0",
     "electron": "^37.2.0",
+    "electron-builder": "^25.1.8",
     "eslint": "^9.15.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
@@ -35,6 +45,7 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
@@ -45,6 +56,7 @@
     "@tanstack/react-query": "^5.81.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "electron-updater": "^6.6.2",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.525.0",
     "next-themes": "^0.4.6",
@@ -53,5 +65,42 @@
     "sonner": "^2.0.6",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
+  },
+  "build": {
+    "appId": "com.duksu.app",
+    "productName": "Duksu",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
+    "npmRebuild": false,
+    "asarUnpack": [
+      "node_modules/ws/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dmg",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "shortcutName": "Duksu",
+      "artifactName": "Duksu ${version}.${ext}",
+      "uninstallDisplayName": "Duksu"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "duksu-ai",
+      "repo": "duksu-fe"
+    }
   }
 }

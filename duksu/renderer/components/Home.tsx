@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Bell, Plus, Check } from 'lucide-react';
+import { Bell, Plus, Check, ArrowUp } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Toaster, toast } from './ui/sonner';
+import { Skeleton } from './ui/skeleton';
 import Feed from './feed';
 import useGetUserFeeds from '../hooks/useGetUserFeeds';
 import useCreateFeed from '../hooks/useCreateFeed';
@@ -48,22 +49,12 @@ export default function Home() {
     }
   }, [feed, prompt, lastSubmittedText]);
 
-  // Infinite scroll logic
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >= 
-        document.documentElement.offsetHeight - 1000 &&
-        hasNextPage &&
-        !isFetchingNextPage
-      ) {
-        fetchNextPage();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  const scrollToTop = () => {
+    const scrollContainer = document.querySelector('.flex-1.overflow-y-auto') as HTMLElement;
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,8 +92,23 @@ export default function Home() {
 
   if (userLoading || feedsLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-lg">Loading...</div>
+      <div className="bg-background p-6">
+        <div className="max-w-4xl mx-auto">
+          <Card className="m-6">
+            <CardHeader>
+              <Skeleton className="h-8 w-80" />
+              <Skeleton className="h-4 w-96 mt-2" />
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <Skeleton className="h-24 w-full" />
+                <div className="flex justify-end">
+                  <Skeleton className="h-10 w-24" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     )
   }
@@ -111,11 +117,8 @@ export default function Home() {
   const feedData = feedItemsData ? {
     items: feedItemsData.pages.flatMap(page => 
       page.items.map(article => ({
-        article,
-        onClick: (article: any) => {
-          // Open article in external browser
-          window.open(article.url, '_blank');
-        }
+        article
+        // No onClick handler - will use default behavior (open detail modal)
       }))
     )
   } : { items: [] };
@@ -166,22 +169,76 @@ export default function Home() {
         {feed && (
           <div className="mt-11">
             {feedItemsLoading ? (
-              <div className="flex justify-center items-center py-8">
-                <div className="text-lg">Loading feed...</div>
+              <div className="max-w-2xl mx-auto space-y-11">
+                {[...Array(3)].map((_, i) => (
+                  <Card key={i} className="p-4">
+                    <div className="flex gap-4">
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-6 w-full" />
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+                      <Skeleton className="w-32 h-18 flex-shrink-0" />
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="w-4 h-4" />
+                        <Skeleton className="h-4 w-16" />
+                      </div>
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4" />
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-18" />
+                    </div>
+                  </Card>
+                ))}
               </div>
             ) : (
               <>
                 <Feed data={feedData} className="mb-8" />
-                {isFetchingNextPage && (
-                  <div className="flex justify-center items-center py-4">
-                    <div className="text-sm text-muted-foreground">Loading more articles...</div>
-                  </div>
-                )}
+                
+                {/* Load More / End of Feed */}
+                <div className="flex justify-center items-center py-8">
+                  {hasNextPage ? (
+                    <Button 
+                      onClick={() => fetchNextPage()}
+                      disabled={isFetchingNextPage}
+                      variant="outline"
+                      className="gap-2"
+                    >
+                      {isFetchingNextPage ? (
+                        <>Loading more articles...</>
+                      ) : (
+                        <>
+                          <Plus className="h-4 w-4" />
+                          Load More Articles
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <div className="text-center text-muted-foreground">
+                      <p className="text-sm">You've reached the end of your feed</p>
+                      <p className="text-xs mt-1">Check back later for new articles</p>
+                    </div>
+                  )}
+                </div>
               </>
             )}
           </div>
         )}
       </div>
+        {/* Scroll to Top Button */}
+        <Button
+          onClick={scrollToTop}
+          size="icon"
+          className="fixed bottom-6 right-6 z-50 shadow-lg hover:shadow-xl transition-shadow"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      
       <Toaster />
     </div>
   )

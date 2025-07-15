@@ -36,7 +36,7 @@ export default function AuthComponent() {
                 }
               }
             }}
-            providers={['google', 'apple']}
+            providers={['google']}
             redirectTo={"http://localhost:4000"}
             onlyThirdPartyProviders={true}
           />
