@@ -2,6 +2,7 @@ import path from 'path';
 import { BrowserWindow as ElectronBrowserWindow, ipcMain, Rectangle, screen, app } from 'electron';
 import { getPlatform } from './util';
 import config from './config';
+import { getIsAppQuitting } from './index';
 
 function calculateBounds(bounds: Rectangle, options: { width: number, height: number }): Rectangle {
     const display = screen.getPrimaryDisplay();
@@ -69,6 +70,12 @@ function createWindow(): BrowserWindow {
   });
   
   window.on('close', (event) => {
+    // If app is quitting, allow the window to close normally
+    if (getIsAppQuitting()) {
+      return;
+    }
+    
+    // Otherwise, prevent closing and hide the window
     event.preventDefault();
     window.hide();
   });

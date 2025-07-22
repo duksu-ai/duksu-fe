@@ -12,7 +12,6 @@ export function createTray(window: BrowserWindow): Tray {
     const trayIcon = nativeImage.createFromPath(iconPath);
     tray = new Tray(trayIcon);
   } catch (error) {
-    // Fallback to simple icon if icon file doesn't exist
     tray = new Tray(nativeImage.createEmpty());
   }
 

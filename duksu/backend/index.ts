@@ -1,11 +1,24 @@
 import { app, ipcMain, shell } from "electron";
 import { autoUpdater } from 'electron-updater';
+import path from 'path';
 import { getPlatform } from './util';
 import createWindow, { BrowserWindow } from './window';
 import { createTray, destroyTray } from './tray';
 import config from "./config";
 
 let window: BrowserWindow | null = null;
+
+let isAppQuitting = false;
+export function getIsAppQuitting(): boolean {
+  return isAppQuitting;
+}
+
+function setDockIcon() {
+  if (getPlatform() === 'macos' && app.dock) {
+    const iconPath = path.resolve(__dirname, '..', 'assets', 'dock-icon.png');
+    app.dock.setIcon(iconPath);
+  }
+}
 
 const instanceLock = app.requestSingleInstanceLock();
 if (!instanceLock) {
@@ -14,6 +27,7 @@ if (!instanceLock) {
   app.whenReady().then(() => {
     window = createWindow();
     createTray(window);
+    setDockIcon();
     window.show();
     
     // Check for updates after window is ready
@@ -41,6 +55,7 @@ app.on('window-all-closed', () => {
 
 // Clean up tray when app is quitting
 app.on('before-quit', () => {
+  isAppQuitting = true;
   destroyTray();
 });
 
